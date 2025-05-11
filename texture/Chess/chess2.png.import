@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnxs7v1861gfm"
-path="res://.godot/imported/Tilemap_Elevation.png-7c2c47c94f2e41e6636ebfd0004d382b.ctex"
+uid="uid://csp7g6hme6js6"
+path="res://.godot/imported/chess2.png-5c9a2847f1e63c6f391db068031f0c63.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://texture/Ground/Tilemap_Elevation.png"
-dest_files=["res://.godot/imported/Tilemap_Elevation.png-7c2c47c94f2e41e6636ebfd0004d382b.ctex"]
+source_file="res://texture/Chess/chess2.png"
+dest_files=["res://.godot/imported/chess2.png-5c9a2847f1e63c6f391db068031f0c63.ctex"]
 
 [params]
 

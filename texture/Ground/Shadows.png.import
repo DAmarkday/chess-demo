@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ddnptrbql1yfq"
-path="res://.godot/imported/Shadows.png-94fcdec4fa0512ee1f458b11b69289e3.ctex"
+path="res://.godot/imported/Shadows.png-01b21081ff88a6cbccb904e23b8edc5d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scene/texture/Ground/Shadows.png"
-dest_files=["res://.godot/imported/Shadows.png-94fcdec4fa0512ee1f458b11b69289e3.ctex"]
+source_file="res://texture/Ground/Shadows.png"
+dest_files=["res://.godot/imported/Shadows.png-01b21081ff88a6cbccb904e23b8edc5d.ctex"]
 
 [params]
 
