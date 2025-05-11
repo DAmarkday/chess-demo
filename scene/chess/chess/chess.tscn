@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx5c2ov4805b3"]
+
+[ext_resource type="Script" path="res://scene/chess/chess/chess.gd" id="1_7bhim"]
+
+[node name="Chess" type="Node2D"]
+script = ExtResource("1_7bhim")
+
+[node name="Grid" type="Node2D" parent="."]
