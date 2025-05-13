@@ -10,12 +10,12 @@ func _ready() -> void:
 	add_child(chess_instance)
 	
 	#生成棋子
-	var arr=chess_instance.createRandomPosition(3)
-	print(arr)
-	# 生成棋子
-	for index in range(0,arr[1].size()):
-		var piece = [车,马,象][randi() % 3]
-		var inst=piece.instantiate()
-		chess_instance.生成棋子(inst,arr[0][index],arr[1][index])
+	#var arr=chess_instance.createRandomPosition(3)
+	#print(arr)
+	## 生成棋子
+	#for index in range(0,arr[1].size()):
+		#var piece = [车,马,象][randi() % 3]
+		#var inst=piece.instantiate()
+		#chess_instance.生成棋子(inst,arr[0][index],arr[1][index])
 	
 	pass
