@@ -76,6 +76,7 @@ class GridChess:
 		var x = 棋子的棋盘坐标.x
 		var y = 棋子的棋盘坐标.y
 		(grid_cells[x][y] as Cell).cell_building = piece
+		piece.global_position = 根据棋子棋盘坐标生成像素坐标(棋子的棋盘坐标)
 		grid_node.add_child(piece)
 		pass
 	
@@ -84,7 +85,7 @@ class GridChess:
 		var cy = chessPosition.y
 		var cs = cell_size
 		if(cx <grid_size.x and cx >=0) and (cy <grid_size.y and cy >=0):
-			return Vector2(cx * cs, cy * cs)
+			return Vector2(cx * cs / 2, cy * cs / 2)
 		return Vector2.ZERO 
 		
 	func 根据像素坐标获取棋盘坐标(像素坐标:Vector2):

@@ -9,7 +9,7 @@ func _ready() -> void:
 	var chess_instance=chess.instantiate()
 	add_child(chess_instance)
 	
-	chess_instance.gridChess.添加棋子(车.instantiate(),Vector2i(1,1))
+	chess_instance.gridChess.添加棋子(车.instantiate(),Vector2i(3,1))
 	#生成棋子
 	#var arr=chess_instance.createRandomPosition(3)
 	#print(arr)
