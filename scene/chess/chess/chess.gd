@@ -1,5 +1,5 @@
 extends Node2D
-
+class_name Chess
 @onready var Grid = $Grid
 
 class Cell:
@@ -31,8 +31,8 @@ class GridChess:
 	var cell_size = 64
 	var selected_cell = Vector2i(-1, -1)
 	var highlight_lines = []
-	var grid_cells=[]
-	var grid_cells_nodes
+	var grid_cells:Array[Array]=[]
+	#var grid_cells_nodes
 	var grid_node:Node2D
 	func _init(Grid:Node2D):
 		grid_node = Grid
@@ -71,6 +71,33 @@ class GridChess:
 			
 	func get_grid_center_position():
 		return Vector2(grid_size.x * cell_size / 2, grid_size.y * cell_size / 2)
+	
+	func 添加棋子(piece:Node2D,棋子的棋盘坐标:Vector2i):
+		var x = 棋子的棋盘坐标.x
+		var y = 棋子的棋盘坐标.y
+		(grid_cells[x][y] as Cell).cell_building = piece
+		grid_node.add_child(piece)
+		pass
+	
+	func 根据棋子棋盘坐标生成像素坐标(chessPosition:Vector2i)-> Vector2:
+		var cx = chessPosition.x 
+		var cy = chessPosition.y
+		var cs = cell_size
+		if(cx <grid_size.x and cx >=0) and (cy <grid_size.y and cy >=0):
+			return Vector2(cx * cs, cy * cs)
+		return Vector2.ZERO 
+		
+	func 根据像素坐标获取棋盘坐标(像素坐标:Vector2):
+		if 像素坐标.x < 0 or 像素坐标.y < 0:
+			return Vector2.ZERO
+			
+		var cell_x = int(像素坐标.x / cell_size)
+		var cell_y = int(像素坐标.y / cell_size)
+		
+		if cell_x >= grid_size.x or cell_y >=grid_size.y:
+			return Vector2.ZERO
+		
+		return Vector2i(cell_x,cell_y)
 		
 
 func setup_camera(pointer:Vector2):
@@ -80,9 +107,10 @@ func setup_camera(pointer:Vector2):
 	add_child(camera)
 	camera.make_current()
 
+var gridChess:GridChess;
 func _ready():
 	randomize()
-	var gridChess=GridChess.new(Grid)
+	gridChess=GridChess.new(Grid)
 	setup_camera(gridChess.get_grid_center_position())
 
 	#create_visual_grid()
@@ -153,16 +181,6 @@ func _ready():
 	#highlight_lines.clear()
 	#
 	#
-#func 生成棋子(piece:Node2D,chessPosition:Vector2,pos:Vector2):
-	#piece.grid_size = grid_size
-	#piece.grid_pieces = grid_pieces
-	#
-	#Grid.add_child(piece)  # 先添加到场景树
-	#piece.z_index=2
-	#piece.set_piece_position(chessPosition)  # 最后设置位置
-	#grid_pieces[chessPosition.x][chessPosition.y] = piece
-	#print("Piece added at pixel position: ", piece.position)
-	#pass
 	#
 #func createRandomPosition(count:int):
 	#var placed_positions = []
