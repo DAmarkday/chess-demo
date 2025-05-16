@@ -85,7 +85,7 @@ class GridChess:
 		var cy = chessPosition.y
 		var cs = cell_size
 		if(cx <grid_size.x and cx >=0) and (cy <grid_size.y and cy >=0):
-			return Vector2(cx * cs / 2, cy * cs / 2)
+			return Vector2(cx * cs  + cs /2, cy * cs + cs /2 )
 		return Vector2.ZERO 
 		
 	func 根据像素坐标获取棋盘坐标(像素坐标:Vector2):
