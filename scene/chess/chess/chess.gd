@@ -1,7 +1,7 @@
 extends Node2D
 class_name Chess
 @onready var Grid = $Grid
-
+@onready var TileLayer:TileMapLayer = $Grid/TileMapLayer
 class Cell:
 	#格子尺寸
 	var cell_size:int = 64  
@@ -34,8 +34,10 @@ class GridChess:
 	var grid_cells:Array[Array]=[]
 	#var grid_cells_nodes
 	var grid_node:Node2D
-	func _init(Grid:Node2D):
+	var grid_tile_layer:TileMapLayer
+	func _init(Grid:Node2D,tileLayer:TileMapLayer):
 		grid_node = Grid
+		grid_tile_layer = tileLayer
 		createCells()
 		createLine()
 		
@@ -100,6 +102,14 @@ class GridChess:
 		
 		return Vector2i(cell_x,cell_y)
 		
+	func 棋盘瓦片添加素材集合(source:TileSet):
+		grid_tile_layer.tile_set = source
+		return source
+	
+	func 添加地面(瓦片id:int,棋盘坐标:Vector2i,瓦片坐标:Vector2i):
+		grid_tile_layer.set_cell(棋盘坐标,瓦片id,瓦片坐标)
+		pass
+		
 
 func setup_camera(pointer:Vector2):
 	var camera = Camera2D.new()
@@ -111,7 +121,7 @@ func setup_camera(pointer:Vector2):
 var gridChess:GridChess;
 func _ready():
 	randomize()
-	gridChess=GridChess.new(Grid)
+	gridChess=GridChess.new(Grid,TileLayer)
 	setup_camera(gridChess.get_grid_center_position())
 
 	#create_visual_grid()
