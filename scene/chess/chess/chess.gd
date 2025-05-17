@@ -15,6 +15,8 @@ class Cell:
 	var cell_ground:Node2D
 	#是否可以站立角色
 	var is_can_stand_up:bool = true
+	
+	var isWall:bool = false
 	#是否可以被摧毁
 	var is_can_be_destroyed:bool = true
 	#是否可以交互
@@ -27,7 +29,7 @@ class Cell:
 		cell_node.color = Color(0.2, 0.2, 0.2)
 
 class GridChess:
-	var grid_size = Vector2i(8, 8)	
+	var grid_size = Vector2i(10, 10)	
 	var cell_size = 64
 	var selected_cell = Vector2i(-1, -1)
 	var highlight_lines = []
@@ -51,6 +53,8 @@ class GridChess:
 		for x in range(grid_size.x):
 			for y in range(grid_size.y):
 				var cell = Cell.new(x,y)
+				if (x ==0 or x == grid_size.x -1) or (y ==0 or y == grid_size.y -1):
+					cell.isWall = true
 				grid_node.add_child(cell.cell_node)
 				grid_cells[x][y] = cell
 				
@@ -61,6 +65,7 @@ class GridChess:
 			line.add_point(Vector2(x * cell_size, grid_size.y * cell_size))
 			line.width = 2
 			line.default_color = Color(0.5, 0.5, 0.5)
+			line.z_index =3
 			grid_node.add_child(line)
 
 		for y in range(grid_size.y + 1):
@@ -68,6 +73,7 @@ class GridChess:
 			line.add_point(Vector2(0, y * cell_size))
 			line.add_point(Vector2(grid_size.x * cell_size, y * cell_size))
 			line.width = 2
+			line.z_index =3
 			line.default_color = Color(0.5, 0.5, 0.5)
 			grid_node.add_child(line)	
 			
@@ -78,11 +84,11 @@ class GridChess:
 		var x = 棋子的棋盘坐标.x
 		var y = 棋子的棋盘坐标.y
 		(grid_cells[x][y] as Cell).cell_building = piece
-		piece.global_position = 根据棋子棋盘坐标生成像素坐标(棋子的棋盘坐标)
+		piece.global_position = 根据格子棋盘坐标生成像素坐标(棋子的棋盘坐标)
 		grid_node.add_child(piece)
 		pass
 	
-	func 根据棋子棋盘坐标生成像素坐标(chessPosition:Vector2i)-> Vector2:
+	func 根据格子棋盘坐标生成像素坐标(chessPosition:Vector2i)-> Vector2:
 		var cx = chessPosition.x 
 		var cy = chessPosition.y
 		var cs = cell_size
@@ -106,9 +112,35 @@ class GridChess:
 		grid_tile_layer.tile_set = source
 		return source
 	
-	func 添加地面(瓦片id:int,棋盘坐标:Vector2i,瓦片坐标:Vector2i):
+	func 添加地面(棋盘坐标:Vector2i,瓦片id:int,瓦片坐标:Vector2i):
 		grid_tile_layer.set_cell(棋盘坐标,瓦片id,瓦片坐标)
 		pass
+		
+	func 判断当前棋盘坐标是否是墙壁(棋盘坐标:Vector2i):
+		var x = 棋盘坐标.x
+		var y = 棋盘坐标.y
+		return (grid_cells[x][y] as Cell).isWall
+	
+	## 根据格子棋盘坐标，判断其相对于中心点的方位。
+	## @param grid_pos: 格子的棋盘坐标 (Vector2i)
+	## @return: 标准化方向向量 (Vector2i)，如 (1, 0) 表示右边，(0, -1) 表示上方
+	func 判断当前格子对于中心点的方位(棋盘坐标:Vector2i):
+		var center_pos = get_grid_center_position()
+		var piece_pos=根据格子棋盘坐标生成像素坐标(棋盘坐标)
+		var direction = Vector2i.ZERO
+		# x 轴：右 (1), 左 (-1), 相同 (0)
+		if piece_pos.x < center_pos.x:
+			direction.x = Vector2.LEFT.x
+		elif piece_pos.x > center_pos.x:
+			direction.x = Vector2.RIGHT.x
+
+		# y 轴：上 (-1), 下 (1), 相同 (0)
+		if piece_pos.y < center_pos.y:
+			direction.y = Vector2.LEFT.y
+		elif piece_pos.y > center_pos.y:
+			direction.y = Vector2.RIGHT.y
+			
+		return direction
 		
 
 func setup_camera(pointer:Vector2):

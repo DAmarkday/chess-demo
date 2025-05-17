@@ -1,6 +1,7 @@
 extends Node2D
 @onready var chess = preload("res://scene/chess/chess/chess.tscn")
-@onready var groundTextures = preload("res://texture/Ground/Tilemap_Elevation.png")
+@onready var groundTextures = preload("res://texture/Ground/Tilemap_Flat.png")
+@onready var wallTextures = preload("res://texture/Ground/Tilemap_Elevation.png")
 
 @onready var 车 = preload("res://scene/chess/rook/rook.tscn")
 @onready var 马 = preload("res://scene/chess/knight/knight.tscn")
@@ -17,16 +18,43 @@ func _ready() -> void:
 	var atlas_source:TileSetAtlasSource = TileSetAtlasSource.new()
 	atlas_source.texture = groundTextures
 	# 设置纹理的区域（例如，一个 16x16 的瓦片）
-	atlas_source.create_tile(Vector2i(0, 0),Vector2i(64, 64))
+	atlas_source.texture_region_size = Vector2i(64, 64)
+	atlas_source.create_tile(Vector2i(1, 1))
+	tileSet.tile_size = Vector2i(64,64)
 	# 将 AtlasSource 添加到 TileSet 中（source ID 为 0）
 	tileSet.add_source(atlas_source, 0)
+	
 	chess_instance.gridChess.棋盘瓦片添加素材集合(tileSet)
 
 	var x:int = chess_instance.gridChess.grid_size.x
 	var y = chess_instance.gridChess.grid_size.y
 	for i in range(x):
 		for j in range(y):
-			chess_instance.gridChess.添加地面(0,Vector2i(x,y),Vector2i(0, 0))
+			var isWall=chess_instance.gridChess.判断当前棋盘坐标是否是墙壁(Vector2i(i,j))
+			if isWall:
+				#添加墙壁纹理
+				#var atlas_source_wall:TileSetAtlasSource = TileSetAtlasSource.new()
+				#atlas_source_wall.texture = wallTextures
+				## 设置纹理的区域（例如，一个 16x16 的瓦片）
+				#atlas_source_wall.texture_region_size = Vector2i(64, 64)
+				#atlas_source_wall.create_tile(Vector2i(0, 0))
+				#tileSet.add_source(atlas_source_wall, 1)
+				#
+				#var direction:Vector2i=chess_instance.gridChess.判断当前格子对于中心点的方位(Vector2i(i,j))
+				#if direction.x >= 0:
+					#
+					#pass
+				#else:
+					#pass
+					#
+				#if direction.y >= 0:
+					#pass
+				#else:
+					#pass
+				pass
+				
+			else:
+				chess_instance.gridChess.添加地面(Vector2i(i,j),0,Vector2i(1, 1))
 			pass
 			#var sp = new Spr
 			#chess_instance.gridChess.grid_cells[x][y].cell_ground = 

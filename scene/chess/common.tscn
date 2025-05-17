@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scene/chess/common.gd" id="1_kg06q"]
 
 [node name="Common" type="Node2D"]
+z_index = 2
 script = ExtResource("1_kg06q")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

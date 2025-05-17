@@ -4,4 +4,5 @@
 [ext_resource type="Script" path="res://scene/chess/rook/rook.gd" id="2_m4eim"]
 
 [node name="PieceTemplate" instance=ExtResource("1_26p1j")]
+z_index = 1
 script = ExtResource("2_m4eim")
